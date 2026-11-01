@@ -15,7 +15,7 @@ const root = resolve(import.meta.dirname, '..');
 test('Markdown renders every incomplete stream prefix without looping', { timeout: 15000 }, async () => {
   const bundle = await build({
     stdin: { contents: `import React from 'react'; import { renderToStaticMarkup } from 'react-dom/server'; import { Markdown } from './src/components/Markdown.tsx'; export {setTranslationLanguage as setLanguage} from './src/lib/i18n.ts'; export const render = text => renderToStaticMarkup(React.createElement(Markdown, { text }));`, resolveDir: root },
-    bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['katex', 'katex/dist/katex.min.css'],   // math loads on demand in the browser
+    bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['katex', 'katex/dist/katex.min.css', 'mermaid'],   // math and diagrams load on demand in the browser
     plugins: [{ name: 'copy-control-stub', setup(b) {
       b.onResolve({ filter: /^\.\/ui$/ }, () => ({ path: 'ui', namespace: 'test-stub' }));
       b.onLoad({ filter: /.*/, namespace: 'test-stub' }, () => ({ contents: 'export const IconBtn = () => null; export const Btn = () => null;' }));

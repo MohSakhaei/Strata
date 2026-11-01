@@ -583,6 +583,8 @@ html[data-motion='reduced'] .task-tree-row[data-leaving] { opacity: 0; }
 [data-theme='dark'] .syntax-code, .st-code .syntax-code { --syntax-comment:#94a3b8; --syntax-keyword:#c4b5fd; --syntax-string:#86efac; --syntax-function:#93c5fd; --syntax-type:#5eead4; --syntax-number:#fdba74; --syntax-punctuation:#cbd5e1; }
 .st-code .syntax-code { color:var(--st-code-ink); }
 .document-markdown .st-code { margin:20px 0; }
+.md-diagram { padding:14px; overflow:auto; }
+.md-diagram svg { display:block; max-width:100%; height:auto; }
 .document-markdown h2, .document-markdown h3, .document-markdown h4 { letter-spacing:-.015em; }
 .document-markdown .md-code { color:var(--syntax-function, #1d4ed8); background:var(--st-surface-2); border-radius:5px; padding:2px 5px; }
 [data-theme='dark'] .document-markdown .md-code { color:#93c5fd; }

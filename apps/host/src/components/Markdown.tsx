@@ -1,9 +1,11 @@
 import { tr } from '../lib/i18n';
 import { copyText } from '../lib/clipboard';
-/** Safe, dependency-free rendering of the Markdown structures used in answers. */
+/** Safe rendering of the Markdown structures used in answers, with no parsing library: the shapes below are built here. */
 import { Fragment, type ReactNode } from 'react';
 import { Btn, IconBtn } from './ui';
 import { SyntaxCode } from './SyntaxCode';
+import { DiagramView } from './DiagramView';
+import { isDiagram } from '../lib/diagrams';
 import { MathView } from './MathView';
 import { displayBlock, hasMath, splitMath } from '../lib/math';
 import { imagePlan } from '../lib/markdown-images';
@@ -84,7 +86,7 @@ export function Markdown({ text, onOpenLink, onPreviewHtml, imageSession }: {
             while (i < lines.length && !/^\s*```/.test(lines[i]))
                 body.push(lines[i++]);
             i++;
-            nodes.push(<div className="st-code" key={key}><div className="st-code__head"><span>{language || tr('code')}</span>{tr(/^html$/i.test(language) && onPreviewHtml ? <Btn size="sm" onClick={() => onPreviewHtml(body.join('\n'))}>{tr("Open preview")}</Btn> : null)}<IconBtn name="copy" title={tr("Copy code")} onClick={() => void copyCode(body.join('\n'))}/></div><SyntaxCode text={body.join('\n')} language={language}/></div>);
+            nodes.push(<div className="st-code" key={key}><div className="st-code__head"><span>{language || tr('code')}</span>{tr(/^html$/i.test(language) && onPreviewHtml ? <Btn size="sm" onClick={() => onPreviewHtml(body.join('\n'))}>{tr("Open preview")}</Btn> : null)}<IconBtn name="copy" title={tr("Copy code")} onClick={() => void copyCode(body.join('\n'))}/></div>{isDiagram(language) ? <DiagramView code={body.join('\n')} language={language}/> : <SyntaxCode text={body.join('\n')} language={language}/>}</div>);
             continue;
         }
         const block = displayBlock(lines, i);

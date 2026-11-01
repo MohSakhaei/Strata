@@ -12,7 +12,7 @@ const PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJA
 async function load() {
   const bundle = await build({
     stdin: { contents: `import React from 'react'; import { renderToStaticMarkup } from 'react-dom/server'; import { Markdown } from './src/components/Markdown.tsx'; import { imagePlan } from './src/lib/markdown-images.ts'; export { imagePlan }; export const render = (text, imageSession) => renderToStaticMarkup(React.createElement(Markdown, { text, imageSession }));`, resolveDir: root },
-    bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['katex', 'katex/dist/katex.min.css'],
+    bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['katex', 'katex/dist/katex.min.css', 'mermaid'],   // math and diagrams load on demand in the browser
     plugins: [{ name: 'copy-control-stub', setup(b) {
       b.onResolve({ filter: /^\.\/ui$/ }, () => ({ path: 'ui', namespace: 'test-stub' }));
       b.onLoad({ filter: /.*/, namespace: 'test-stub' }, () => ({ contents: 'export const IconBtn = () => null; export const Btn = () => null;' }));

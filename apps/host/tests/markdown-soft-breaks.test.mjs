@@ -8,7 +8,7 @@ import { build } from 'esbuild';
 const root = resolve(import.meta.dirname, '..');
 const bundle = await build({
   stdin: { contents: `import React from 'react'; import { renderToStaticMarkup } from 'react-dom/server'; import { Markdown } from './src/components/Markdown.tsx'; export const html = text => renderToStaticMarkup(React.createElement(Markdown, { text }));`, resolveDir: root, loader: 'ts' },
-  bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['katex', 'katex/dist/katex.min.css'],
+  bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic', external: ['katex', 'katex/dist/katex.min.css', 'mermaid'],   // math and diagrams load on demand in the browser
   plugins: [{ name: 'stub', setup(b) {
     b.onResolve({ filter: /^\.\/ui$/ }, () => ({ path: 'ui', namespace: 'test-stub' }));
     b.onLoad({ filter: /.*/, namespace: 'test-stub' }, () => ({ contents: 'export const IconBtn = () => null; export const Btn = () => null;' }));
