@@ -14,7 +14,7 @@ const run = (code, externals) => build({
   external: ['katex', 'katex/dist/katex.min.css', 'mermaid', ...externals],
   plugins: [{ name: 'stub', setup(b) {
     b.onResolve({ filter: /^\.\/ui$/ }, () => ({ path: 'ui', namespace: 'test-stub' }));
-    b.onLoad({ filter: /.*/, namespace: 'test-stub' }, () => ({ contents: 'export const IconBtn = () => null; export const Btn = () => null;' }));
+    b.onLoad({ filter: /.*/, namespace: 'test-stub' }, () => ({ contents: 'export const IconBtn = () => null; export const Btn = () => null; export const Icon = () => null;' }));
   } }],
 }).then(built => {
   const mod = { exports: {} };
@@ -52,7 +52,7 @@ test('a diagram fence still gives its source, and nothing is drawn without a bro
 test('the library is only asked for by a diagram, and what it draws is sanitized', () => {
   const markdown = source('src/components/Markdown.tsx');
   const view = source('src/components/DiagramView.tsx');
-  assert.match(markdown, /isDiagram\(language\) \? <DiagramView code=\{body\.join\('\\n'\)\} language=\{language\}\/> : <SyntaxCode/);
+  assert.match(markdown, /isDiagram\(language\) \? <DiagramView code=\{code\} language=\{language\}\/> : <SyntaxCode/);
   assert.ok(!/from 'mermaid'/.test(markdown), 'the page never pulls the drawing library in on its own');
   assert.match(view, /import\('mermaid'\)/);
   assert.match(view, /securityLevel: 'strict'/);
